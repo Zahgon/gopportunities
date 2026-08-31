@@ -5,20 +5,20 @@ import (
 	"net/http"
 
 	"github.com/arthur404dev/gopportunities/schemas"
-	"github.com/gin-gonic/gin"
+	"github.com/labstack/echo/v4"
 )
 
-func sendError(ctx *gin.Context, code int, msg string) {
-	ctx.Header("Content-type", "application/json")
-	ctx.JSON(code, gin.H{
+func sendError(ctx echo.Context, code int, msg string) error {
+	ctx.Response().Header().Set("Content-type", "application/json")
+	return ctx.JSON(code, map[string]interface{}{
 		"message":   msg,
 		"errorCode": code,
 	})
 }
 
-func sendSuccess(ctx *gin.Context, op string, data interface{}) {
-	ctx.Header("Content-type", "application/json")
-	ctx.JSON(http.StatusOK, gin.H{
+func sendSuccess(ctx echo.Context, op string, data interface{}) error {
+	ctx.Response().Header().Set("Content-type", "application/json")
+	return ctx.JSON(http.StatusOK, map[string]interface{}{
 		"message": fmt.Sprintf("operation from handler: %s successfull", op),
 		"data":    data,
 	})

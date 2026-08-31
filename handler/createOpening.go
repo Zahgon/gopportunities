@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/arthur404dev/gopportunities/schemas"
-	"github.com/gin-gonic/gin"
+	"github.com/labstack/echo/v4"
 )
 
 // @BasePath /api/v1
@@ -19,15 +19,14 @@ import (
 // @Failure 400 {object} ErrorResponse
 // @Failure 500 {object} ErrorResponse
 // @Router /opening [post]
-func CreateOpeningHandler(ctx *gin.Context) {
+func CreateOpeningHandler(ctx echo.Context) error {
 	request := CreateOpeningRequest{}
 
-	ctx.BindJSON(&request)
+	ctx.Bind(&request)
 
 	if err := request.Validate(); err != nil {
 		logger.Errorf("validation error: %v", err.Error())
-		sendError(ctx, http.StatusBadRequest, err.Error())
-		return
+		return sendError(ctx, http.StatusBadRequest, err.Error())
 	}
 
 	opening := schemas.Opening{
@@ -41,9 +40,8 @@ func CreateOpeningHandler(ctx *gin.Context) {
 
 	if err := db.Create(&opening).Error; err != nil {
 		logger.Errorf("error creating opening: %v", err.Error())
-		sendError(ctx, http.StatusInternalServerError, "error creating opening on database")
-		return
+		return sendError(ctx, http.StatusInternalServerError, "error creating opening on database")
 	}
 
-	sendSuccess(ctx, "create-opening", opening)
+	return sendSuccess(ctx, "create-opening", opening)
 }

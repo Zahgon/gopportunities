@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/arthur404dev/gopportunities/schemas"
-	"github.com/gin-gonic/gin"
+	"github.com/labstack/echo/v4"
 )
 
 // @BasePath /api/v1
@@ -19,17 +19,15 @@ import (
 // @Failure 400 {object} ErrorResponse
 // @Failure 404 {object} ErrorResponse
 // @Router /opening [get]
-func ShowOpeningHandler(ctx *gin.Context) {
-	id := ctx.Query("id")
+func ShowOpeningHandler(ctx echo.Context) error {
+	id := ctx.QueryParam("id")
 	if id == "" {
-		sendError(ctx, http.StatusBadRequest, errParamIsRequired("id", "queryParameter").Error())
-		return
+		return sendError(ctx, http.StatusBadRequest, errParamIsRequired("id", "queryParameter").Error())
 	}
 	opening := schemas.Opening{}
 	if err := db.First(&opening, id).Error; err != nil {
-		sendError(ctx, http.StatusNotFound, "opening not found")
-		return
+		return sendError(ctx, http.StatusNotFound, "opening not found")
 	}
 
-	sendSuccess(ctx, "show-opening", opening)
+	return sendSuccess(ctx, "show-opening", opening)
 }

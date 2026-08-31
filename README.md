@@ -4,7 +4,7 @@
   <img src="./assets/GopportunitiesHeader.svg" alt="GoJob Header">
 </p>
 
-This project is a modern job opportunities API built using Golang, currently one of the highest paying programming languages. The API is powered by Go-Gin as a router, GoORM for database communication, SQLite as the database, and Swagger for API documentation and testing. The project follows a modern package structure to keep the codebase organized and maintainable.
+This project is a modern job opportunities API built using Golang, currently one of the highest paying programming languages. The API is powered by Echo as a router, GoORM for database communication, SQLite as the database, and Swagger for API documentation and testing. The project follows a modern package structure to keep the codebase organized and maintainable.
 
 ---
 
@@ -12,7 +12,7 @@ This project is a modern job opportunities API built using Golang, currently one
 
 - Introduction to Golang and building modern APIs
 - Development environment setup for creating the API
-- Using Go-Gin as a router for route management
+- Using Echo as a router for route management
 - Implementing SQLite as the database for the API
 - Using GoORM for communication with the database
 - Integrating Swagger for API documentation and testing
@@ -82,7 +82,7 @@ For more information on Docker and Docker Compose, refer to the official documen
 This project uses the following tools:
 
 - [Golang](https://golang.org/) for backend development
-- [Go-Gin](https://github.com/gin-gonic/gin) for route management
+- [Echo](https://github.com/labstack/echo) for route management
 - [GoORM](https://gorm.io/) for database communication
 - [SQLite](https://www.sqlite.org/index.html) as the database
 - [Swagger](https://swagger.io/) for API documentation and testing
